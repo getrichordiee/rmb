@@ -10,10 +10,12 @@ body {
     background-color: #f7f7f7;
 }
 
+/* Основной контейнер */
 .app-container {
     text-align: center;
 }
 
+/* Кнопки */
 .button {
     background-color: #008CBA;
     color: white;
@@ -29,6 +31,7 @@ body {
     background-color: #005f73;
 }
 
+/* Скрытые элементы */
 .signal-container, .signal-details, .signal-result {
     display: none;
 }
@@ -41,6 +44,7 @@ body {
     display: block;
 }
 
+/* Адаптивность для мобильных устройств */
 @media screen and (max-width: 600px) {
     body {
         padding: 20px;
