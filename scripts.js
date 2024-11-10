@@ -1,4 +1,4 @@
-// Получаем все элементы
+// Получаем элементы
 const registerBtn = document.getElementById('registerBtn');
 const accessBtn = document.getElementById('accessBtn');
 const signalsContainer = document.getElementById('signals');
@@ -6,14 +6,8 @@ const rocketSignal = document.getElementById('rocketSignal');
 const minesSignal = document.getElementById('minesSignal');
 const signalResult = document.getElementById('signalResult');
 const signalText = document.getElementById('signalText');
-const getRocketSignalBtn = document.getElementById('getRocketSignalBtn');
-const getMinesSignalBtn = document.getElementById('getMinesSignalBtn');
-const backToSignalsBtn = document.getElementById('backToSignalsBtn');
-const backToSignalsBtn2 = document.getElementById('backToSignalsBtn2');
-const backToMenuBtn = document.getElementById('backToMenuBtn');
-const newSignalBtn = document.getElementById('newSignalBtn');
 
-// Функции для переключения видимости
+// Показывать и скрывать блоки
 function showElement(element) {
     element.classList.add('show');
 }
@@ -22,74 +16,100 @@ function hideElement(element) {
     element.classList.remove('show');
 }
 
-// Стартовый экран
-accessBtn.addEventListener('click', () => {
+// Переходы между экранами
+registerBtn.addEventListener('click', () => {
+    window.location.href = "https://1warlo.top/casino/list?open=register&p=eu9d";
+});
+
+// Показать экран с выбором сигналов после регистрации
+document.getElementById('registerBtn').addEventListener('click', () => {
     hideElement(registerBtn);
-    hideElement(accessBtn);
     showElement(signalsContainer);
 });
 
-// Перейти к сигнала Ракеты
-rocketSignal.addEventListener('click', () => {
+// Ракетный сигнал
+document.getElementById('rocketBtn').addEventListener('click', () => {
     hideElement(signalsContainer);
     showElement(rocketSignal);
 });
 
-// Перейти к сигнала Мины
-minesSignal.addEventListener('click', () => {
+// Сигнал мины
+document.getElementById('minesBtn').addEventListener('click', () => {
     hideElement(signalsContainer);
     showElement(minesSignal);
 });
 
-// Получить сигнал Ракеты
-getRocketSignalBtn.addEventListener('click', () => {
-    generateSignal('rocket');
-});
-
-// Получить сигнал Мины
-getMinesSignalBtn.addEventListener('click', () => {
-    generateSignal('mines');
-});
-
-// Функция для генерации сигнала
-function generateSignal(type) {
+// Назад в меню
+document.getElementById('backToSignalsBtn').addEventListener('click', () => {
     hideElement(rocketSignal);
-    hideElement(minesSignal);
-    showElement(signalResult);
-
-    if (type === 'rocket') {
-        const coefficient = (Math.random() * (20 - 1.01) + 1.01).toFixed(2);
-        const chance = Math.max(19, Math.floor(100 - coefficient * 5));
-        const duration = Math.floor(Math.random() * (240 - 15 + 1)) + 15;
-
-        signalText.innerHTML = `💰Коэффициент: ${coefficient}x<br>😈Шанс: ${chance}%<br>⏱️Срок действия: ${duration} секунд`;
-    } else if (type === 'mines') {
-        const numMines = Math.random() > 0.5 ? 1 : 3;
-        const numStars = numMines === 1 ? 9 : 6;
-        const matrix = Array.from({ length: 5 }, () => Array(5).fill("🟦"));
-        const stars = [];
-
-        while (stars.length < numStars) {
-            const randPos = Math.floor(Math.random() * 25);
-            if (!stars.includes(randPos)) {
-                stars.push(randPos);
-                matrix[Math.floor(randPos / 5)][randPos % 5] = "⭐";
-            }
-        }
-
-        const matrixStr = matrix.map(row => row.join('')).join('\n');
-        const duration = Math.floor(Math.random() * (240 - 15 + 1)) + 15;
-
-        signalText.innerHTML = `💣Количество мин: ${numMines}<br>⏱️Срок действия: ${duration} секунд<br><br>⭐Выигрышный вариант:<br>${matrixStr}`;
-    }
-}
-
-// Кнопки назад и новый сигнал
-backToMenuBtn.addEventListener('click', () => {
-    hideElement(signalResult);
     showElement(signalsContainer);
 });
 
-newSignalBtn.addEventListener('click', () => {
-    generateSignal(rocketSignal.classList.contains('show') ? 'rocket' : 'mines');
+document.getElementById('backToSignalsBtn2').addEventListener('click', () => {
+    hideElement(minesSignal);
+    showElement(signalsContainer);
+});
+
+// Генерация ракетного сигнала
+document.getElementById('getRocketSignalBtn').addEventListener('click', async () => {
+    const coefficient = (Math.random() * 20).toFixed(2);
+    const chance = Math.max(19, Math.floor(100 - coefficient * 5));
+    const duration = Math.floor(Math.random() * (240 - 15) + 15);
+
+    const signalMessage = `
+        Сигнал получен🔥
+        💰Коэффициент: ${coefficient}x
+        😈Шанс: ${chance}%
+        ⏱️Срок действия: ${duration} секунд
+    `;
+    signalText.innerHTML = signalMessage;
+
+    hideElement(rocketSignal);
+    showElement(signalResult);
+});
+
+// Генерация сигнала мин
+document.getElementById('getMinesSignalBtn').addEventListener('click', async () => {
+    const numMines = Math.random() > 0.5 ? 1 : 3;  // 50% шанс на 1 или 3 мины
+    const numStars = numMines === 1 ? 9 : 6;  // Для 1 мины — 9 звезд, для 3 — 6
+    const duration = Math.floor(Math.random() * (240 - 15) + 15);
+
+    let matrix = Array(5).fill().map(() => Array(5).fill('🟦'));
+    const stars = [];
+    while (stars.length < numStars) {
+        const starIndex = Math.floor(Math.random() * 25);
+        if (!stars.includes(starIndex)) stars.push(starIndex);
+    }
+
+    stars.forEach(star => {
+        const row = Math.floor(star / 5);
+        const col = star % 5;
+        matrix[row][col] = '⭐';
+    });
+
+    const matrixStr = matrix.map(row => row.join('')).join('\n');
+    const signalMessage = `
+        Сигнал получен🔥
+        💣Количество мин: ${numMines}
+        ⏱️Срок действия: ${duration} секунд
+
+        ⭐Выигрышный вариант:
+        ${matrixStr}
+    `;
+    signalText.innerHTML = signalMessage;
+
+    hideElement(minesSignal);
+    showElement(signalResult);
+});
+
+// Новые сигналы
+document.getElementById('newSignalBtn').addEventListener('click', () => {
+    hideElement(signalResult);
+    showElement(rocketSignal);  // или minesSignal в зависимости от выбора
+});
+
+// Назад в меню
+document.getElementById('backToMenuBtn').addEventListener('click', () => {
+    hideElement(signalResult);
+    showElement(signalsContainer);
 });
