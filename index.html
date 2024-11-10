@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-приложение для Telegram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .button {
+            background-color: #008CBA;
+            color: white;
+            padding: 15px 32px;
+            margin: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #005f73;
+        }
+        .signal-container {
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добро пожаловать в наше мини-приложение!</h1>
+    <p>Нажмите на одну из кнопок ниже, чтобы получить сигнал для игры:</p>
+
+    <!-- Кнопки выбора игры -->
+    <button class="button" id="rocketButton">🚀 Ракета</button>
+    <button class="button" id="minesButton">💣 Мины</button>
+
+    <!-- Сигналы -->
+    <div class="signal-container" id="signalContainer">
+        <h2>Сигнал получен 🔥</h2>
+        <p id="signalText">Генерация сигнала...</p>
+        <button class="button" id="newSignalButton">Получить новый сигнал ✔️</button>
+        <button class="button" id="backButton">Назад 🔙</button>
+    </div>
+
+    <script>
+        // Инициализация кнопок и контейнера
+        const rocketButton = document.getElementById('rocketButton');
+        const minesButton = document.getElementById('minesButton');
+        const signalContainer = document.getElementById('signalContainer');
+        const signalText = document.getElementById('signalText');
+        const newSignalButton = document.getElementById('newSignalButton');
+        const backButton = document.getElementById('backButton');
+
+        let currentGame = '';
+
+        // Обработчик для кнопки "Ракета"
+        rocketButton.onclick = () => {
+            currentGame = 'rocket';
+            generateSignal();
+        };
+
+        // Обработчик для кнопки "Мины"
+        minesButton.onclick = () => {
+            currentGame = 'mines';
+            generateSignal();
+        };
+
+        // Генерация сигнала
+        function generateSignal() {
+            signalContainer.style.display = 'block';  // Показать контейнер с сигналом
+            signalText.textContent = 'Подождите, идёт генерация сигнала... 🧭';
+
+            // Симуляция задержки для генерации сигнала
+            setTimeout(() => {
+                const coefficient = (Math.random() * (20 - 1) + 1).toFixed(2);
+                const chance = Math.max(19, (100 - coefficient * 3)).toFixed(0);
+                const duration = Math.floor(Math.random() * (240 - 15 + 1)) + 15;
+
+                if (currentGame === 'rocket') {
+                    signalText.innerHTML = `🚀 Сигнал для Ракеты:<br>💰Коэффициент: ${coefficient}x<br>😈Шанс: ${chance}%<br>⏱️Срок действия: ${duration} секунд`;
+                } else if (currentGame === 'mines') {
+                    const numMines = Math.random() > 0.5 ? 1 : 3;
+                    const matrix = generateMines(numMines);
+                    signalText.innerHTML = `💣 Сигнал для Мины:<br>Количество мин: ${numMines}<br>⏱️Срок действия: ${duration} секунд<br><br>${matrix}`;
+                }
+            }, 3000); // Задержка для генерации
+        }
+
+        // Генерация матрицы для Мины
+        function generateMines(numMines) {
+            const size = 5;
+            let matrix = Array(size).fill().map(() => Array(size).fill('🟦')); // Инициализируем матрицу
+            const stars = [];
+
+            while (stars.length < numMines) {
+                let index = Math.floor(Math.random() * (size * size));
+                if (!stars.includes(index)) {
+                    stars.push(index);
+                    const row = Math.floor(index / size);
+                    const col = index % size;
+                    matrix[row][col] = '⭐'; // Размещаем звезды (мины)
+                }
+            }
+
+            return matrix.map(row => row.join('')).join('<br>');
+        }
+
+        // Кнопка "Назад"
+        backButton.onclick = () => {
+            signalContainer.style.display = 'none'; // Скрыть контейнер сигнала
+        };
+
+        // Кнопка "Получить новый сигнал"
+        newSignalButton.onclick = () => {
+            generateSignal(); // Генерация нового сигнала
+        };
+    </script>
+</body>
+</html>
