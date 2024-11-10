@@ -3,50 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino Bot</title>
+    <title>Мини-приложение казино</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Главное меню -->
-        <div id="menu" class="menu">
-            <h1>Добро пожаловать в казино!</h1>
-            <button class="button" id="registerBtn">Регистрация</button>
-            <button class="button" id="accessBtn">Начать работу</button>
-        </div>
-
-        <!-- Сигналы -->
-        <div id="signals" class="signal-container">
-            <h2>Выберите тип сигнала</h2>
-            <button class="button" id="rocketBtn">🚀 Ракета</button>
-            <button class="button" id="minesBtn">💣 Мины</button>
-        </div>
-
-        <!-- Ракета -->
-        <div id="rocketSignal" class="signal-details">
-            <h3>Ракета 🚀</h3>
-            <p>Сигнал для игры в LuckyJet</p>
-            <button class="button" id="getRocketSignalBtn">Получить сигнал</button>
-            <button class="button" id="backToSignalsBtn">Назад</button>
-        </div>
-
-        <!-- Мины -->
-        <div id="minesSignal" class="signal-details">
-            <h3>Мины 💣</h3>
-            <p>Сигнал для игры в Mines</p>
-            <button class="button" id="getMinesSignalBtn">Получить сигнал</button>
-            <button class="button" id="backToSignalsBtn2">Назад</button>
-        </div>
-        
-        <!-- Сигнал -->
-        <div id="signalResult" class="signal-result">
-            <h3>Сигнал получен!</h3>
-            <p id="signalText"></p>
-            <button class="button" id="newSignalBtn">Получить новый сигнал</button>
-            <button class="button" id="backToMenuBtn">Назад в меню</button>
-        </div>
+    <!-- Добро пожаловать в сигналы -->
+    <div id="welcomeScreen" class="menu">
+        <h1>Добро пожаловать в сигналы!</h1>
+        <p>Чтобы получить доступ к сигналам, зарегистрируйтесь по ссылке ниже:</p>
+        <button class="button" id="registerBtn">Регистрация</button>
     </div>
-    
+
+    <!-- Выбор сигнала -->
+    <div id="signals" class="signal-container">
+        <h2>Выберите тип сигнала</h2>
+        <button class="button" id="rocketBtn">🚀 Ракета</button>
+        <button class="button" id="minesBtn">💣 Мины</button>
+    </div>
+
+    <!-- Ракетный сигнал -->
+    <div id="rocketSignal" class="signal-details">
+        <h3>Ракета 🚀</h3>
+        <p>Сигнал для игры в LuckyJet</p>
+        <button class="button" id="getRocketSignalBtn">Получить сигнал</button>
+        <button class="button" id="backToSignalsBtn">Назад</button>
+    </div>
+
+    <!-- Мины -->
+    <div id="minesSignal" class="signal-details">
+        <h3>Мины 💣</h3>
+        <p>Сигнал для игры в Mines</p>
+        <button class="button" id="getMinesSignalBtn">Получить сигнал</button>
+        <button class="button" id="backToSignalsBtn2">Назад</button>
+    </div>
+
+    <!-- Результат сигнала -->
+    <div id="signalResult" class="signal-result">
+        <h3>Сигнал получен!</h3>
+        <p id="signalText"></p>
+        <button class="button" id="newSignalBtn">Получить новый сигнал</button>
+        <button class="button" id="backToMenuBtn">Назад в меню</button>
+    </div>
+
     <script src="scripts.js"></script>
 </body>
 </html>
