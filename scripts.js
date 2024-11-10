@@ -1,13 +1,12 @@
 // Получаем элементы
 const registerBtn = document.getElementById('registerBtn');
-const accessBtn = document.getElementById('accessBtn');
 const signalsContainer = document.getElementById('signals');
 const rocketSignal = document.getElementById('rocketSignal');
 const minesSignal = document.getElementById('minesSignal');
 const signalResult = document.getElementById('signalResult');
 const signalText = document.getElementById('signalText');
 
-// Показывать и скрывать блоки
+// Функция для показа и скрытия элементов
 function showElement(element) {
     element.classList.add('show');
 }
@@ -16,14 +15,14 @@ function hideElement(element) {
     element.classList.remove('show');
 }
 
-// Переходы между экранами
+// Переход на страницу регистрации
 registerBtn.addEventListener('click', () => {
     window.location.href = "https://1warlo.top/casino/list?open=register&p=eu9d";
 });
 
-// Показать экран с выбором сигналов после регистрации
-document.getElementById('registerBtn').addEventListener('click', () => {
-    hideElement(registerBtn);
+// Показать экран с выбором сигналов
+registerBtn.addEventListener('click', () => {
+    hideElement(document.getElementById('welcomeScreen'));
     showElement(signalsContainer);
 });
 
